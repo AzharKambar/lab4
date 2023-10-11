@@ -1,42 +1,48 @@
-#прописываем функцию
-def count_elements_occurrence(input_tuple):
-    element_counts = {}
+def count_elements_in_tuple(input_tuple):
+    # Создаем пустой словарь для подсчета вхождений элементов
+    element_count = {}
+    
+    try:
+        # Итерируемся по элементам в кортеже
+        for item in input_tuple:
+            # Пробуем преобразовать элемент в строку (если это не строка)
+            try:
+                item_str = str(item)
+            except Exception as e:
+                item_str = str(item)
+            
+            # Если элемент уже есть в словаре, увеличиваем счетчик на 1, иначе добавляем его в словарь
+            if item_str in element_count:
+                element_count[item_str] += 1
+            else:
+                element_count[item_str] = 1
+        
+        # Создаем новый кортеж, содержащий пары элементов и их количество вхождений
+        result_tuple = tuple((key, value) for key, value in element_count.items())
+        
+        return result_tuple
+    except Exception as e:
+        return f"Ошибка: {str(e)}"
 
-    for element in input_tuple:
-        # Convert elements to a hashable form (e.g., tuples to strings)
-        try:
-            hashable_element = element if isinstance(element, str) else str(element)
-        except TypeError:
-            hashable_element = str(element)
-
-        if hashable_element in element_counts:
-            element_counts[hashable_element] += 1
-        else:
-            element_counts[hashable_element] = 1
-
-    result_list = [(eval(k) if k.startswith('(') and k.endswith(')') else k, v) for k, v in element_counts.items()]
-
-    result_tuple = tuple(result_list)
-
-    return result_tuple
-
-# Example usage:
+# Примеры ввода
 input_tuple_1 = (55, 6, 777, 54, 6, 76, 7777, 1, 777, 6)
 input_tuple_2 = ('55', '6', '777', 54, 6, 7777, 9, 777, 6)
-input_tuple_3 = ((1, 2, 3), (['A', 'B']), (1, 2, 3), (['A']))
+input_tuple_3 = ((1,2,3), (['A', 'B']), (1,2,3), (['A']))
 
-result_1 = count_elements_occurrence(input_tuple_1)
-result_2 = count_elements_occurrence(input_tuple_2)
-result_3 = count_elements_occurrence(input_tuple_3)
+# Вызываем функцию для каждого примера ввода
+output_1 = count_elements_in_tuple(input_tuple_1)
+output_2 = count_elements_in_tuple(input_tuple_2)
+output_3 = count_elements_in_tuple(input_tuple_3)
 
-print("Sample Output 1:")
-print("Elements and their occurrences:")
-print(result_1)
+# Выводим результат
+print("Пример вывода 1:")
+print("Элементы и их вхождения:")
+print(output_1)
 
-print("\nSample Output 2:")
-print("Elements and their occurrences:")
-print(result_2)
+print("Пример вывода 2:")
+print("Элементы и их вхождения:")
+print(output_2)
 
-print("\nSample Output 3:")
-print("Elements and their occurrences:")
-print(result_3)
+print("Пример вывода 3:")
+print("Элементы и их вхождения:")
+print(output_3)
